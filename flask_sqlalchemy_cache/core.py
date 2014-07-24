@@ -78,7 +78,6 @@ class CachingQuery(BaseQuery):
                                      ignore_expiration=ignore_expiration)
         else:
             cached_value = cache.get(cache_key)
-            print cached_value
             if not cached_value:
                 cached_value = createfunc()
                 cache.set(cache_key, cached_value, timeout=expiration_time)
