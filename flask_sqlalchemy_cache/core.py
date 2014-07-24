@@ -1,3 +1,4 @@
+# coding: utf-8
 """Flask-SQLAlchemy-Cache
 
 A SQLAlchemy CachingQuery implementation for Flask, using Flask-Cache.
