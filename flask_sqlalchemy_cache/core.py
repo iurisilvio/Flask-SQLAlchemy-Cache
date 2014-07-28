@@ -146,7 +146,7 @@ class RelationshipCache(MapperOption):
 
     propagate_to_loaders = True
 
-    def __init__(self, attribute, cache_key=None):
+    def __init__(self, attribute, cache, cache_key=None):
         """
         Construct a new RelationshipCache.
 
@@ -157,6 +157,7 @@ class RelationshipCache(MapperOption):
         key to the query, bypassing the usual means of forming a key from the
         Query itself.
         """
+        self.cache = cache
         self.cache_key = cache_key
         self._relationship_options = {
             (attribute.property.parent.class_, attribute.property.key): self
