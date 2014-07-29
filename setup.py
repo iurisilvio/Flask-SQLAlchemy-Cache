@@ -13,7 +13,7 @@ setup(
     platforms='any',
     package=['flask_cache_sqlalchemy'],
     install_requires=[
-        'Flask',
+        'Flask>=0.9',
         'Flask-Cache',
         'Flask-SQLAlchemy',
     ],

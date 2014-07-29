@@ -114,14 +114,11 @@ class CachingQuery(BaseQuery):
         return md5(key).hexdigest()
 
 
-class FromCache(MapperOption):
-    """Specifies that a Query should load results from a cache."""
-
-    propagate_to_loaders = False
+class _CacheableMapperOption(MapperOption):
 
     def __init__(self, cache, cache_key=None):
         """
-        Construct a new FromCache.
+        Construct a new `_CacheableMapperOption`.
 
         :param cache: the cache.  Should be a Flask-Cache instance.
 
@@ -133,12 +130,27 @@ class FromCache(MapperOption):
         self.cache = cache
         self.cache_key = cache_key
 
+    def __getstate__(self):
+        """
+        Flask-Cache instance is not picklable because it has references
+        to Flask.app. Also, I don't want it cached.
+        """
+        d = self.__dict__.copy()
+        d.pop('cache', None)
+        return d
+
+
+class FromCache(_CacheableMapperOption):
+    """Specifies that a Query should load results from a cache."""
+
+    propagate_to_loaders = False
+
     def process_query(self, query):
         """Process a Query during normal loading operation."""
         query._cache = self
 
 
-class RelationshipCache(MapperOption):
+class RelationshipCache(_CacheableMapperOption):
     """
     Specifies that a Query as called within a "lazy load" should load
     results from a cache.
@@ -157,8 +169,7 @@ class RelationshipCache(MapperOption):
         key to the query, bypassing the usual means of forming a key from the
         Query itself.
         """
-        self.cache = cache
-        self.cache_key = cache_key
+        super(RelationshipCache, self).__init__(cache, cache_key)
         self._relationship_options = {
             (attribute.property.parent.class_, attribute.property.key): self
         }
