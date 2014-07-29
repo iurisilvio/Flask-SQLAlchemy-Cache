@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='Flask-SQLAlchemy-Cache',
-    version='0.1',
+    version='0.1.1',
     description='CachingQuery implementation to Flask using Flask-SQLAlchemy and Flask-Cache',
     author='Iuri de Silvio',
     author_email='iurisilvio@gmail.com',
