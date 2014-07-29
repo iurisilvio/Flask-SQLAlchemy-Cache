@@ -11,7 +11,7 @@ setup(
     url='http://www.github.com/iurisilvio/Flask-SQLAlchemy-Cache',
     license='MIT',
     platforms='any',
-    package=['flask_cache_sqlalchemy'],
+    packages=['flask_sqlalchemy_cache'],
     install_requires=[
         'Flask>=0.9',
         'Flask-Cache',
