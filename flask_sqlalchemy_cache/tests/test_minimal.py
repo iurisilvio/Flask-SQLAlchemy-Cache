@@ -3,7 +3,7 @@ import unittest
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy, Model
 from flask.ext.cache import Cache
-from flask_sqlalchemy_cache import CachingQuery, FromCache
+from flask.ext.sqlalchemy_cache import CachingQuery, FromCache
 
 Model.query_class = CachingQuery
 
@@ -46,7 +46,7 @@ class TestFromCache(unittest.TestCase):
         self.ctx.pop()
 
     def test_cache_hit(self):
-        q = Country.query.order_by(Country.id.desc())
+        q = Country.query.order_by(Country.name.desc())
         caching_q = q.options(FromCache(cache))
 
         # cache miss
@@ -63,3 +63,7 @@ class TestFromCache(unittest.TestCase):
 
         # cache hit
         self.assertEqual('Brazil', caching_q.first().name)
+
+    def test_no_results(self):
+        # regression test (check #3) to handle zero results gracefully
+        Country.query.filter_by(name="URSS").options(FromCache(cache)).all()
