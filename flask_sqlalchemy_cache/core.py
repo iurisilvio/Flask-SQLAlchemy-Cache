@@ -45,7 +45,7 @@ class CachingQuery(BaseQuery):
         """
         if hasattr(self, '_cache'):
             func = lambda: list(BaseQuery.__iter__(self))
-            return self.get_value(createfunc=func)
+            return iter(self.get_value(createfunc=func))
         else:
             return BaseQuery.__iter__(self)
 
