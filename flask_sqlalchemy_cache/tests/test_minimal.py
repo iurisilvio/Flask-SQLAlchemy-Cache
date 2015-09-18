@@ -1,3 +1,4 @@
+# coding: UTF-8
 import unittest
 
 from flask import Flask
@@ -67,3 +68,10 @@ class TestFromCache(unittest.TestCase):
     def test_no_results(self):
         # regression test (check #3) to handle zero results gracefully
         Country.query.filter_by(name="URSS").options(FromCache(cache)).all()
+
+    def test_special_chars(self):
+        unicode_name = u"Côte d'Ivoire"
+        unicode_country = Country(unicode_name)
+        db.session.add(unicode_country)
+        db.session.commit()
+        Country.query.filter_by(name=unicode_name).options(FromCache(cache)).all()

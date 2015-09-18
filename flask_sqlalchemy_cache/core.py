@@ -109,8 +109,10 @@ class CachingQuery(BaseQuery):
         compiled = stmt.compile()
         params = compiled.params
 
-        key = " ".join([str(compiled)] +
-                       [str(params[k]) for k in sorted(params)])
+        values = [str(compiled)]
+        for k in sorted(params):
+            values.append(repr(params[k]))
+        key = u" ".join(values)
         return md5(key).hexdigest()
 
 
