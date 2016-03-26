@@ -12,6 +12,9 @@ from flask.ext.sqlalchemy_cache import CachingQuery
 
 Model.query_class == CachingQuery
 db = SQLAlchemy(session_options={'query_cls': CachingQuery})
+
+# for Flask-SQLAlchemy >= 3.0, `query_class` is a built-in argument.
+db = SQLAlchemy(app, query_class=CachingQuery)
 ```
 
 After that, you can just make queries to a model `YourModel`:
