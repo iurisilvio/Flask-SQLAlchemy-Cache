@@ -1,11 +1,23 @@
 language: python
 
-before_install: pip install tox
+python:
+  - 2.7
+  - 3.3
+  - 3.4
+  - 3.5
 
-env:
-  - TOXENV=py27-flask-09
-  - TOXENV=py27-flask-010
-  - TOXENV=py33
-  - TOXENV=py34
+matrix:
+  include:
+    - python: 2.7
+    - FLASK="<0.10"
 
-script: tox -e $TOXENV
+install:
+  - pip install flask$FLASK
+  - pip install pytest coverage coveralls
+  - python setup.py install
+
+script:
+  - coverage run --source=flask_sqlalchemy_cache setup.py test
+
+after_success:
+  - coveralls
