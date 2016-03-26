@@ -113,7 +113,7 @@ class CachingQuery(BaseQuery):
         for k in sorted(params):
             values.append(repr(params[k]))
         key = u" ".join(values)
-        return md5(key).hexdigest()
+        return md5(key.encode('utf8')).hexdigest()
 
 
 class _CacheableMapperOption(MapperOption):
