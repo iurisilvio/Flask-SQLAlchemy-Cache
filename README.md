@@ -10,7 +10,8 @@ To start using caching queries, you just have to replace Flask-SQLAlchemy
 from flask.ext.sqlalchemy import SQLAlchemy. Model
 from flask.ext.sqlalchemy_cache import CachingQuery
 
-Model.query_class == CachingQuery
+# for Flask-SQLAlchemy < 3.0, set `Model.query_class` and `session_options['query_cls']`
+Model.query_class = CachingQuery
 db = SQLAlchemy(session_options={'query_cls': CachingQuery})
 
 # for Flask-SQLAlchemy >= 3.0, `query_class` is a built-in argument.
