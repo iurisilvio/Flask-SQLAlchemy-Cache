@@ -9,7 +9,7 @@ http://docs.sqlalchemy.org/en/latest/orm/examples.html#module-examples.dogpile_c
 from hashlib import md5
 
 from sqlalchemy.orm.interfaces import MapperOption
-from flask.ext.sqlalchemy import BaseQuery
+from flask_sqlalchemy import BaseQuery
 
 
 class CachingQuery(BaseQuery):
